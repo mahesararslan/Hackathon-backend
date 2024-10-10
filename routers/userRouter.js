@@ -377,7 +377,7 @@ userRouter.post("/sendEmail", authMiddleware, async(req,res)=>{
         })
     }
 
-    const otp = await emailService.sendOTP(user.email);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
     await prisma.user.update({
@@ -402,8 +402,8 @@ userRouter.post("/sendEmail", authMiddleware, async(req,res)=>{
     }) 
     const emailOptions = {
       from: {
-        name: process.env.EMAIL,
-        address: process.env.EMAIL
+        name: "",
+        address: "Pakistan"
       },
       to: process.env.EMAIL,
       subject: "OTP",

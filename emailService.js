@@ -5,8 +5,8 @@ class EmailService {
     this.transporter = nodemailer.createTransport({
       service: 'gmail',  // Or your preferred email service
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
       }
     });
   }
@@ -19,7 +19,7 @@ class EmailService {
     const otp = this.generateOTP();
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.EMAIL,
       to: email,
       subject: 'Your OTP for Authentication',
       text: `Your OTP is: ${otp}. It will expire in 10 minutes.`

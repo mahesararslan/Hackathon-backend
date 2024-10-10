@@ -21,6 +21,7 @@ enum DeviceStatus {
   Review
   Approved
   Sold
+  Rejected
 }
 
 enum DeviceType {
