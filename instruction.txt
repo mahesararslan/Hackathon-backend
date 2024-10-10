@@ -1,0 +1,28 @@
+npm init -y
+add "type": "module", in package.json
+
+npm i express
+npm i cors
+npm i bcrypt
+npm i jsonwebtoken
+npm i zod
+npm i dotenv 
+npm install nodemon --save-dev
+[   "start": "node index.js",
+    "dev": "nodemon index.js"
+]
+
+npm install passport-google-oauth2
+
+npm i prisma
+npx prisma init
+npx prisma migrate dev --name <name of migration>
+npx prisma generate
+
+[
+    For Importing from .env: 
+    import dotenv from 'dotenv';
+    dotenv.config(); 
+]
+
+

@@ -1,0 +1,95 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or mongodb depending on your setup
+  url      = env("DATABASE_URL")
+}
+
+// Enums for device conditions and transaction statuses
+enum Condition {
+  New
+  Used
+  Damaged
+}
+
+enum DeviceStatus {
+  Pending
+  Review
+  Approved
+  Sold
+}
+
+enum DeviceType {
+  Smartphone
+  Laptop
+  Tablet
+}
+
+enum Delivery {
+  Pickup
+  Parcel
+}
+
+enum TransactionStatus {
+  Pending
+  Completed
+}
+
+// User model (for sellers)
+model User {
+  id            String   @id @default(uuid())
+  firstName          String
+  lastName          String
+  email         String   @unique
+  password      String?
+  otp        String?
+  otpExpiresAt DateTime?
+  verificationStatus Boolean @default(false)
+  devices       Device[]
+  paymentMethods paymentMethod[]
+}
+
+// Admin model (for managing requests)
+model Admin {
+  id            String   @id @default(uuid())
+  firstName          String
+  lastName          String
+  email         String   @unique
+  password      String?
+  profileURL String?
+}
+
+// Device model
+model Device {
+  id            String   @id @default(uuid())
+  type          String
+  brand         String
+  model         String
+  yearOfPurchase Int
+  condition     Condition
+  storageCapacity String
+  defects       String[] // List of defects (as array of strings)
+  serialNumber  String?   @unique // only for mobiles
+  pictures      String // image URL
+  status        DeviceStatus @default(Pending)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  estimatedPrice Float
+  adjustedPrice Float?
+  Time          DateTime @default(now())
+}
+
+
+model paymentMethod {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  cardNumber    String
+  expiryDate    String
+  cvv           String
+}
+
